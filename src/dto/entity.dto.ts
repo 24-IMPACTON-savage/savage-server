@@ -1,3 +1,5 @@
+import { unitEnum } from "../util/types/writepost.types"
+
 export class SaveSeniorDto {
     constructor(
         name: string, 
@@ -38,4 +40,31 @@ export class SaveWorkerDto {
     expr: Date
     hashed: string
     passport: string
+}
+
+export class SavePostDto {
+    constructor(
+        location: string,
+        contact: string,
+        name: string,
+        todo: string,
+        payment: number,
+        time: number,
+        unit: unitEnum
+    ) {
+        this.location = location
+        this.contact = contact
+        this.name = name
+        this.todo = todo
+        this.payment = payment
+        this.time = time
+        this.unit = unit
+    }
+    location: string
+    contact: string
+    name: string
+    todo: string
+    payment: number
+    time: number
+    unit: unitEnum
 }

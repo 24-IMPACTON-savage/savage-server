@@ -1,3 +1,4 @@
+import { unitEnum } from '../../util/types/writepost.types'
 import {Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
@@ -8,19 +9,38 @@ export class Post {
     postId!: number
 
     @Column({
-        type: 'varchar',
-        length: 50
+        type: 'varchar'
     })
-    title!: string
+    contact!: string
 
     @Column({
-        type: 'text'
+        type: 'varchar'
     })
-    body!: string
+    name!: string
 
     @Column({
         type: 'varchar',
         length: 30
     })
-    address!: string
+    location!: string
+
+    @Column({
+        type: 'varchar'
+    })
+    todo!: string
+
+    @Column({
+        type: 'int'
+    })
+    payment!: number
+
+    @Column({
+        type: 'varchar'
+    })
+    unit!: unitEnum
+
+    @Column({
+        type: 'int'
+    })
+    time!: number
 }

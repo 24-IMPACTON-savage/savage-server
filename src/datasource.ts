@@ -2,6 +2,8 @@ import { DataSource } from "typeorm";
 import { configDotenv } from "dotenv";
 import { Senior } from "./models/entity/senior.entity";
 import { Worker } from "./models/entity/worker.entity";
+import { Post } from "./models/entity/post.entity";
+import { SeniorWorker } from "./models/entity/seniorWorker.entity";
 
 configDotenv();
 
@@ -16,7 +18,7 @@ const AppDataSource = new DataSource({
     username,
     password,
     database,
-    entities: [Senior, Worker],
+    entities: [Senior, Worker, Post, SeniorWorker],
     synchronize: true,
     logging: ["info", "error"],
 });

@@ -1,4 +1,4 @@
-import { ConflictException, ForbiddenException, NotFoundException } from "@nestjs/common";
+import { ConflictException, ForbiddenException } from "@nestjs/common";
 import {
     isExistContact,
     saveSenior,
@@ -8,7 +8,7 @@ import {
 import { Request, Response } from "express";
 import { hash, genSalt } from "bcrypt";
 import { configDotenv } from "dotenv";
-import { SaveSeniorDto, SaveWorkerDto } from "@src/dto/entity.dto";
+import { SaveSeniorDto, SaveWorkerDto } from "../dto/entity.dto";
 import { Worker } from "../models/entity/worker.entity";
 import { getDateDiff } from "../util/function/date.set";
 
@@ -66,7 +66,6 @@ const myPage = async (req: Request, res: Response): Promise<Response> => {
     const { contact } = req.payload as any
 
     const thisUser = await findByContact(contact)
-    if(!thisUser) throw new NotFoundException();
     if(!(thisUser instanceof Worker)) throw new ForbiddenException();
 
     const dateToExpiresIn = getDateDiff(thisUser.expr, new Date(Date.now()).toDateString())

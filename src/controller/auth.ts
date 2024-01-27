@@ -53,7 +53,10 @@ const validateToken = async (
     if (!hasTokenSpace) throw new NotAcceptableException();
 
     const toBeValidate = auth.split(" ")[1];
-    const jwt = verify(toBeValidate, process.env.SALT!);
+    const jwt: any = verify(toBeValidate, process.env.SALT!);
+
+    const isExist = await findByContact(jwt.contact) 
+    if(!isExist) throw new NotFoundException()
 
     req.payload = jwt
 
