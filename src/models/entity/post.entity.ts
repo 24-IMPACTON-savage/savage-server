@@ -1,5 +1,6 @@
 import { unitEnum } from '../../util/types/writepost.types'
-import {Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Senior } from './senior.entity'
 
 @Entity()
 export class Post {
@@ -37,4 +38,10 @@ export class Post {
         type: 'varchar'
     })
     time!: string
+
+    @Column()
+    seniorId!: number
+
+    @ManyToOne(() => Senior, senior => senior.seniorId)
+    senior!: Senior
 }

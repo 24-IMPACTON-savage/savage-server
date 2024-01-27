@@ -9,9 +9,10 @@ const postRepository = AppDataSource.getRepository(Post)
 const locationRepository = AppDataSource.getRepository(Location)
 
 export const createPost = async (savePostDto: SavePostDto): Promise<void> => {
-    const { location, contact, name, todo, payment, time, unit } = savePostDto
+    const { seniorId, location, contact, name, todo, payment, time, unit } = savePostDto
 
     const thisPost = await postRepository.save({
+        seniorId,
         contact,
         name,
         todo,

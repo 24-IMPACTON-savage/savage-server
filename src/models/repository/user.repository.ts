@@ -57,3 +57,15 @@ export const findByContactFromWorker = async (contact: string) => {
     if(!worker) throw new NotFoundException()
     return worker
 }
+
+export const findSeniorByContact = async (contact: string) => {
+    const senior = await seniorRepository.findOneBy({contact})
+    if(!senior) throw new NotFoundException()
+    return senior
+} 
+
+export const findSeniorById = async (seniorId: number) => {
+    const senior = await seniorRepository.findOneBy({seniorId})
+    if(!senior) throw new NotFoundException()
+    return senior
+}

@@ -47,6 +47,7 @@ export class SaveWorkerDto {
 
 export class SavePostDto {
     constructor(
+        seniorId: number,
         location: locationDto[],
         contact: string,
         name: string,
@@ -57,6 +58,7 @@ export class SavePostDto {
         latitude: number,
         longitude: number,
     ) {
+        this.seniorId = seniorId
         this.location = location
         this.contact = contact
         this.name = name
@@ -65,6 +67,7 @@ export class SavePostDto {
         this.time = time
         this.unit = unit
     }
+    seniorId: number
     location: locationDto[]
     contact: string
     name: string

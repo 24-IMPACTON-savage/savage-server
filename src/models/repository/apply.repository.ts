@@ -3,10 +3,15 @@ import { AppDataSource } from "../../datasource";
 import { Apply } from "../entity/apply.entity";
 import { Worker } from "../entity/worker.entity";
 import { Post } from "../entity/post.entity";
+import { SeniorWorker } from "../entity/seniorWorker.entity";
+import { findPostById } from "./post.repository";
+import { Senior } from "../entity/senior.entity";
 
 const applyRepository = AppDataSource.getRepository(Apply)
 const workerRepository = AppDataSource.getRepository(Worker)
 const postRepository = AppDataSource.getRepository(Post)
+const seniorWorkerRepository = AppDataSource.getRepository(SeniorWorker)
+const seniorRepository = AppDataSource.getRepository(Senior)
 
 export const saveApply = async (workerId: number, postId: number) => {
     const thisApply = await applyRepository.findOneBy({workerId})
@@ -37,4 +42,17 @@ export const findWorkerById = async (workerId: number, postId: number) => {
         unit: apply.unit,
         payment: apply.payment
     }
+}
+
+export const replaceWorker = async (workerId: number, postId: number) => {
+    const apply = await applyRepository.findOneBy({workerId, postId})
+    if(!apply) throw new NotFoundException()
+
+    const senior = await seniorRepository.findOneBy({seniorId: (await findPostById(postId)).seniorId})
+    if(!senior) throw new NotFoundException()
+
+    await seniorWorkerRepository.save({
+        seniorId: senior.seniorId,
+        workerId,
+    })
 }

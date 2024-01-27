@@ -1,7 +1,7 @@
 import { BadRequestException } from "@nestjs/common"
 import { FindAllPostDto, SavePostDto } from "../dto/entity.dto"
 import { createPost, findAllPost, findPostById } from "../models/repository/post.repository"
-import { findByContact } from "../models/repository/user.repository"
+import { findSeniorByContact } from "../models/repository/user.repository"
 import { unitEnum } from "../util/types/writepost.types"
 import { Request, Response } from "express"
 
@@ -9,7 +9,7 @@ const writePost = async (req: Request, res: Response) => {
     const { contact } = req.payload as any
     const { location, todo, payment, unit, time, latitude, longitude } = req.body
 
-    const thisUser = await findByContact(contact)
+    const thisUser = await findSeniorByContact(contact)
 
     const thisUnit = 
         unit == unitEnum.hour ? unitEnum.hour :
@@ -19,6 +19,7 @@ const writePost = async (req: Request, res: Response) => {
         unitEnum.transaction
 
     const savePostDto: SavePostDto = {
+        seniorId: thisUser.seniorId,
         contact,
         name: thisUser!.name,
         location,
