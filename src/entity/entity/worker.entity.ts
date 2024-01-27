@@ -6,31 +6,30 @@ export class Worker {
     @PrimaryGeneratedColumn({
         type: "bigint"
     })
-    workerId: number
+    workerId!: number
 
     @Column({
         unique: true,
         type: "varchar",
         length: 12
     })
-    contact: string
+    contact!: string
 
     @Column({
         type: "varchar",
         length: 10
     })
-    name: string
+    name!: string
 
     @Column({
         type: "date",
-        default: Date.now()
     })
-    expr: Date
+    expr!: Date
 
     @Column({name: 'seniorId' })
-    seniorId: number
+    seniorId!: number
 
     @ManyToMany(() => Senior)
     @JoinTable()
-    senior: Promise<Senior>
+    senior?: Promise<Senior>
 }

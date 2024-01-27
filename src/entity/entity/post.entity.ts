@@ -5,22 +5,22 @@ export class Post {
     @PrimaryGeneratedColumn({
         type: "bigint"
     })
-    postId: number
+    postId!: number
 
     @Column({
         type: 'varchar',
         length: 50
     })
-    title: string
+    title!: string
 
     @Column({
         type: 'text'
     })
-    body: string
+    body!: string
 
     @Column({
         type: 'varchar',
         length: 30
     })
-    address: string
+    address!: string
 }
