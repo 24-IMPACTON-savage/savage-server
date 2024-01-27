@@ -3,14 +3,17 @@ import { unitEnum } from "../util/types/writepost.types"
 export class SaveSeniorDto {
     constructor(
         name: string, 
+        hashed: string,
         address: string, 
         contact: string
     ) {
         this.name = name
+        this.hashed = hashed
         this.address = address
         this.contact = contact
     }
     name: string
+    hashed: string
     address: string
     contact: string
 }
@@ -44,13 +47,15 @@ export class SaveWorkerDto {
 
 export class SavePostDto {
     constructor(
-        location: string[],
+        location: locationDto[],
         contact: string,
         name: string,
         todo: string,
         payment: number,
         time: number,
-        unit: unitEnum
+        unit: unitEnum,
+        latitude: number,
+        longitude: number,
     ) {
         this.location = location
         this.contact = contact
@@ -60,11 +65,38 @@ export class SavePostDto {
         this.time = time
         this.unit = unit
     }
-    location: string[]
+    location: locationDto[]
     contact: string
     name: string
     todo: string
     payment: number
     time: number
     unit: unitEnum
+}
+
+export class locationDto {
+    constructor (
+        location: string,
+        latitude: number,
+        longitude: number,
+    ) {
+        this.location = location
+        this.latitude = latitude
+        this.longitude = longitude
+    }
+    location: string
+    latitude: number
+    longitude: number
+}
+
+export class FindAllPostDto {
+    constructor(
+        latitude: number,
+        longitude: number
+    ) {
+        this.latitude = latitude,
+        this.longitude = longitude
+    }
+    latitude: number
+    longitude: number
 }

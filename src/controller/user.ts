@@ -23,7 +23,8 @@ const signUpSenior = async (req: Request, res: Response): Promise<Response> => {
     const hashed = await hash(name, salt);
 
     const saveSeniorDto: SaveSeniorDto = {
-        name : hashed,
+        name,
+        hashed,
         address,
         contact,
     };

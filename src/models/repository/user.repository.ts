@@ -17,12 +17,13 @@ export const isExistContact = async (contact: string): Promise<boolean> => {
 export const saveSenior = async (
     saveSeniorDto: SaveSeniorDto
 ): Promise<void> => {
-    const { name, address, contact } = saveSeniorDto;
-    const newSenior = new Senior();
-    newSenior.name = name;
-    newSenior.address = address;
-    newSenior.contact = contact;
-    await seniorRepository.save(newSenior);
+    const { name, address, contact, hashed } = saveSeniorDto;
+    await seniorRepository.save({
+        name,
+        hashed,
+        address,
+        contact,
+    });
 };
 
 export const saveWorker = async (

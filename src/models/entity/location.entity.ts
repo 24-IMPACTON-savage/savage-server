@@ -11,6 +11,16 @@ export class Location {
     })
     location!: string;
 
+    @Column({
+        type: "double"
+    })
+    latitude!: number
+
+    @Column({
+        type: "double"
+    })
+    longitude!: number
+
     @Column()
     postId!: number;
 

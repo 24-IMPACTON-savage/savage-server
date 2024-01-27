@@ -4,6 +4,7 @@ import { Senior } from "./models/entity/senior.entity";
 import { Worker } from "./models/entity/worker.entity";
 import { Post } from "./models/entity/post.entity";
 import { SeniorWorker } from "./models/entity/seniorWorker.entity";
+import { Location } from "./models/entity/location.entity";
 
 configDotenv();
 
@@ -18,7 +19,7 @@ const AppDataSource = new DataSource({
     username,
     password,
     database,
-    entities: [Senior, Worker, Post, SeniorWorker],
+    entities: [Senior, Worker, Post, SeniorWorker, Location],
     synchronize: true,
     logging: ["info", "error"],
 });
