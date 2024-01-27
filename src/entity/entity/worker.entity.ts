@@ -1,12 +1,10 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Senior } from "./senior.entity";
 
 @Entity()
 export class Worker {
-    @PrimaryGeneratedColumn({
-        type: "bigint"
-    })
-    workerId!: number
+    @PrimaryGeneratedColumn()
+    workerId: number = 0
 
     @Column({
         unique: true,
@@ -20,6 +18,17 @@ export class Worker {
         length: 10
     })
     name!: string
+
+    @Column({
+        type: "text"
+    })
+    introduce!: string
+
+    @Column({
+        type: "varchar",
+        length: 10
+    })
+    country!: string
 
     @Column({
         type: "date",

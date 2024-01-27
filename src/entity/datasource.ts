@@ -17,7 +17,7 @@ const AppDataSource = new DataSource({
     password,
     database,
     entities: [Senior, Worker],
-    synchronize: false,
+    synchronize: true,
     logging: ["info", "error"],
 });
 

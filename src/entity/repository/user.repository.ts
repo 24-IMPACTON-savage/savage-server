@@ -16,3 +16,9 @@ export const isExistContact = async (contact: string): Promise<boolean> => {
 export const saveSenior = async (name: string, address: string, contact: string): Promise<void> => {
     await seniorRepository.save({name, address, contact})
 }
+
+export const saveWorker = async (
+    name: string, address: string, contact: string, introduce: string, country: string, expr: Date
+): Promise<void> => {
+    await workerRepository.save({ name, address, contact, introduce, country, expr })
+}

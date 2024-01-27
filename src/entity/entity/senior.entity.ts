@@ -1,12 +1,9 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn, JoinTable } from "typeorm";
-import { Worker } from "./worker.entity";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Senior {
-    @PrimaryGeneratedColumn({
-        type: "bigint"
-    })
-    seniorId!: number
+    @PrimaryGeneratedColumn()
+    seniorId: number = 0
 
     @Column({
         unique: true,
