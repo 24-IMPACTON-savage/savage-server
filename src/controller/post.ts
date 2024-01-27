@@ -1,9 +1,10 @@
-import { BadRequestException } from "@nestjs/common"
+import { BadRequestException, NotFoundException } from "@nestjs/common"
 import { FindAllPostDto, SavePostDto } from "../dto/entity.dto"
-import { createPost, findAllPost, findPostById } from "../models/repository/post.repository"
+import { createPost, findAllPost, findPostById, modifyPosting, removePosting } from "../models/repository/post.repository"
 import { findSeniorByContact } from "../models/repository/user.repository"
 import { unitEnum } from "../util/types/writepost.types"
 import { Request, Response } from "express"
+import { ModifyDto } from "../dto/logic.dto"
 
 const writePost = async (req: Request, res: Response) => {
     let { contact } = req.payload as any
@@ -69,8 +70,24 @@ const getPostList = async (req: Request, res: Response) => {
     })
 }
 
+const removePost = async (req: Request, res: Response) => {
+    const { postId } = req.params
+    const { contact } = req.payload as any
+    const thisUser = await findSeniorByContact(contact)
+    if(!thisUser) throw new NotFoundException()
+
+    await removePosting(Number(postId), thisUser.seniorId)
+
+    return res.status(204).json({
+        data: null,
+        statusCode: 204,
+        statusMsg: "No Content"
+    })
+}
+
 export {
     writePost,
     getPost,
-    getPostList
+    getPostList,
+    removePost
 }

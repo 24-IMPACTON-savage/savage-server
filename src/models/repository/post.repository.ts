@@ -1,9 +1,10 @@
 import { AppDataSource } from "../../datasource";
 import { Post } from "../entity/post.entity";
 import { FindAllPostDto, SavePostDto, locationDto } from "../../dto/entity.dto";
-import { NotFoundException } from "@nestjs/common";
+import { ForbiddenException, NotFoundException } from "@nestjs/common";
 import { Location } from "../entity/location.entity";
 import { DISTANCE, distance } from "../../util/function/distance";
+import { ModifyDto } from "@src/dto/logic.dto";
 
 const postRepository = AppDataSource.getRepository(Post)
 const locationRepository = AppDataSource.getRepository(Location)
@@ -43,4 +44,42 @@ export const findAllPost = async (findAllPostDto: FindAllPostDto) => {
     return (await locationRepository.find()).filter(async location => {
         await distance(location.latitude, location.longitude, latitude, longitude) <= DISTANCE
     })
+}
+
+export const findAllLocationByPostId = async (postId: number) => {
+    return await locationRepository.findBy({ postId })
+}
+
+export const modifyPosting = async (modifyDto: ModifyDto, postId: number) => {
+    let {name, todo, payment, unit, time, contact} = modifyDto
+
+    const thisPost = await findPostById(postId)
+
+    name = name ? name : thisPost.name
+    todo = todo ? todo : thisPost.todo
+    payment = payment ? payment: thisPost.payment 
+    unit = unit ? unit : thisPost.unit 
+    time = time ? time : thisPost.time
+    contact = contact ? contact : thisPost.contact
+
+    await postRepository.update({
+        postId: thisPost.postId,
+    },{
+        seniorId: thisPost.seniorId,
+        name,
+        todo,
+        payment,
+        unit,
+        time,
+        contact
+    })
+}
+
+export const removePosting = async (postId: number, seniorId: number) => {
+    const thisPost = await findPostById(postId)
+    if(!thisPost) throw new NotFoundException()
+
+    if(thisPost.seniorId !== seniorId) throw new ForbiddenException()
+
+    await postRepository.remove(thisPost)
 }
