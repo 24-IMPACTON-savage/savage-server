@@ -44,7 +44,7 @@ export class SaveWorkerDto {
 
 export class SavePostDto {
     constructor(
-        location: string,
+        location: string[],
         contact: string,
         name: string,
         todo: string,
@@ -60,7 +60,7 @@ export class SavePostDto {
         this.time = time
         this.unit = unit
     }
-    location: string
+    location: string[]
     contact: string
     name: string
     todo: string

@@ -19,12 +19,6 @@ export class Post {
     name!: string
 
     @Column({
-        type: 'varchar',
-        length: 30
-    })
-    location!: string
-
-    @Column({
         type: 'varchar'
     })
     todo!: string
