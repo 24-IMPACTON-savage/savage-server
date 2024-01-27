@@ -7,8 +7,6 @@ export const apply = async (req: Request, res: Response) => {
     const { postId } = req.params;
     const  { contact } = req.payload as any;
 
-    console.log(contact, postId)
-
     const thisUser = await findByContactFromWorker(contact)
     const thisPost = await findPostById(Number(postId))
 

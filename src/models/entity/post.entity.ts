@@ -34,7 +34,7 @@ export class Post {
     unit!: unitEnum
 
     @Column({
-        type: 'int'
+        type: 'varchar'
     })
-    time!: number
+    time!: string
 }

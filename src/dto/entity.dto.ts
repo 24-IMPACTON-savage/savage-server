@@ -52,7 +52,7 @@ export class SavePostDto {
         name: string,
         todo: string,
         payment: number,
-        time: number,
+        time: string,
         unit: unitEnum,
         latitude: number,
         longitude: number,
@@ -70,7 +70,7 @@ export class SavePostDto {
     name: string
     todo: string
     payment: number
-    time: number
+    time: string
     unit: unitEnum
 }
 
