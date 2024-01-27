@@ -6,8 +6,11 @@ import { unitEnum } from "../util/types/writepost.types"
 import { Request, Response } from "express"
 
 const writePost = async (req: Request, res: Response) => {
-    const { contact } = req.payload as any
-    const { location, todo, payment, unit, time, latitude, longitude } = req.body
+    let { contact } = req.payload as any
+    const { location, todo, payment, unit, time } = req.body
+    const callNumber = req.body.contact
+
+    if(callNumber) contact = callNumber
 
     const thisUser = await findSeniorByContact(contact)
 
