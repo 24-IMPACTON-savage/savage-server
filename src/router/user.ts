@@ -7,6 +7,6 @@ const router = express();
 
 router.post("/senior", exceptionHandler(signUpSenior));
 router.post("/worker", exceptionHandler(signUpWorker));
-router.get("/", validateToken, exceptionHandler(myPage));
+router.get("/", exceptionHandler(validateToken), exceptionHandler(myPage));
 
 export default router;

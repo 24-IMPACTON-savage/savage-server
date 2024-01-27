@@ -1,5 +1,5 @@
 import { SavePostDto } from "../dto/entity.dto"
-import { createPost } from "../models/repository/post.repository"
+import { createPost, findPostById } from "../models/repository/post.repository"
 import { findByContact } from "../models/repository/user.repository"
 import { unitEnum } from "../util/types/writepost.types"
 import { Request, Response } from "express"
@@ -35,6 +35,20 @@ const writePost = async (req: Request, res: Response) => {
     })
 }
 
+const getPost = async (req: Request, res: Response) => {
+    const postId = Number(req.params.postId)
+    console.log(postId)
+
+    const thisPost = await findPostById(postId);
+
+    return res.status(200).json({
+        data: thisPost,
+        statusCode: 200,
+        statusMsg: "OK"
+    })
+}
+
 export {
     writePost,
+    getPost
 }
