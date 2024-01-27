@@ -1,13 +1,16 @@
-import { ConflictException } from "@nestjs/common";
+import { ConflictException, ForbiddenException, NotFoundException } from "@nestjs/common";
 import {
     isExistContact,
     saveSenior,
     saveWorker,
-} from "../repository/user.repository";
+    findByContact
+} from "../models/repository/user.repository";
 import { Request, Response } from "express";
 import { hash, genSalt } from "bcrypt";
 import { configDotenv } from "dotenv";
 import { SaveSeniorDto, SaveWorkerDto } from "@src/dto/entity.dto";
+import { Worker } from "../models/entity/worker.entity";
+import { getDateDiff } from "../util/function/date.set";
 
 configDotenv();
 
@@ -20,10 +23,10 @@ const signUpSenior = async (req: Request, res: Response): Promise<Response> => {
     const hashed = await hash(name, salt);
 
     const saveSeniorDto: SaveSeniorDto = {
-        name,
+        name : hashed,
         address,
-        contact
-    }
+        contact,
+    };
     await saveSenior(saveSeniorDto);
 
     return res.status(201).json({
@@ -34,7 +37,7 @@ const signUpSenior = async (req: Request, res: Response): Promise<Response> => {
 };
 
 const signUpWorker = async (req: Request, res: Response): Promise<Response> => {
-    const { contact, name, address, introduce, country } = req.body;
+    const { contact, name, introduce, country, passport } = req.body;
 
     if (await isExistContact(contact)) throw new ConflictException();
 
@@ -43,13 +46,14 @@ const signUpWorker = async (req: Request, res: Response): Promise<Response> => {
 
     const saveWorkerDto: SaveWorkerDto = {
         contact,
-        name: hashed,
-        address,
+        name,
+        hashed,
         introduce,
         country,
-        expr: new Date(Date.now())
-    }
-    await saveWorker(saveWorkerDto)
+        expr: new Date(Date.now()),
+        passport
+    };
+    await saveWorker(saveWorkerDto);
 
     return res.status(201).json({
         data: null,
@@ -58,7 +62,31 @@ const signUpWorker = async (req: Request, res: Response): Promise<Response> => {
     });
 };
 
-export default {
+const myPage = async (req: Request, res: Response): Promise<Response> => {
+    const { contact } = req.payload as any
+
+    const thisUser = await findByContact(contact)
+    if(!thisUser) throw new NotFoundException();
+    if(!(thisUser instanceof Worker)) throw new ForbiddenException();
+
+    const dateToExpiresIn = getDateDiff(thisUser.expr, new Date(Date.now()).toDateString())
+
+    const data = {
+        dateToExpiresIn,
+        country: thisUser.country,
+        name: thisUser.name,
+        passort: thisUser.passport
+    }
+
+    return res.status(200).json({
+        data,
+        statusCode: 200,
+        statusMsg: "OK"
+    })
+}
+
+export {
     signUpSenior,
     signUpWorker,
+    myPage
 };

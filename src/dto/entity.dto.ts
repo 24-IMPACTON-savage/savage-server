@@ -16,23 +16,26 @@ export class SaveSeniorDto {
 export class SaveWorkerDto {
     constructor(
         name: string,
-        address: string,
         contact: string,
         introduce: string,
         country: string,
-        expr: Date
+        expr: Date,
+        hashed: string,
+        passport: string,
     ) {
         this.name = name,
-        this.address = address,
         this.contact = contact,
         this.introduce = introduce,
         this.country = country,
-        this.expr = expr
+        this.expr = expr,
+        this.hashed = hashed,
+        this.passport = passport
     }
     name: string
-    address: string
     contact: string
     introduce: string
     country: string
     expr: Date
+    hashed: string
+    passport: string
 }

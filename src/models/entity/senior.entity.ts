@@ -20,6 +20,11 @@ export class Senior {
     name!: string
 
     @Column({
+        type: "varchar"
+    })
+    hashed!: string
+
+    @Column({
         type: "varchar",
     })
     address!: string

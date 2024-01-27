@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { configDotenv } from "dotenv";
-import { Senior } from "./entity/senior.entity";
-import { Worker } from "./entity/worker.entity";
+import { Senior } from "./models/entity/senior.entity";
+import { Worker } from "./models/entity/worker.entity";
 
 configDotenv();
 

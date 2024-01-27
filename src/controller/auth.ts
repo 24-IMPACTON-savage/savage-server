@@ -1,9 +1,13 @@
 import { configDotenv } from "dotenv";
 import { Request, Response } from "express";
 import { sign, verify } from "jsonwebtoken";
-import { compare, genSalt } from "bcrypt";
-import { findByContact } from "../repository/user.repository";
-import { BadRequestException, NotFoundException } from "@nestjs/common";
+import { compare } from "bcrypt";
+import { findByContact } from "../models/repository/user.repository";
+import {
+    BadRequestException,
+    NotAcceptableException,
+    NotFoundException,
+} from "@nestjs/common";
 
 configDotenv();
 
@@ -13,7 +17,7 @@ const signIn = async (req: Request, res: Response): Promise<Response> => {
     const thisUser = await findByContact(contact);
     if (thisUser == null) throw new NotFoundException();
 
-    if (!(await compare(name, thisUser.name))) throw new BadRequestException();
+    if (!(await compare(name, thisUser.hashed))) throw new BadRequestException();
 
     const expiresIn = Date.now() + 1000 * 3600 * 24 * 7 * 52;
 
@@ -37,4 +41,26 @@ const signIn = async (req: Request, res: Response): Promise<Response> => {
     });
 };
 
-export { signIn };
+const validateToken = async (
+    req: Request,
+    res: Response,
+    next: any
+): Promise<void> => {
+    const auth = req.get("authorization") || req.get("Authorization")
+    if (!auth) throw new BadRequestException();
+
+    const hasTokenSpace = auth.includes(" ");
+    if (!hasTokenSpace) throw new NotAcceptableException();
+
+    const toBeValidate = auth.split(" ")[1];
+    const jwt = verify(toBeValidate, process.env.SALT!);
+
+    req.payload = jwt
+
+    next();
+};
+
+export { 
+    signIn, 
+    validateToken
+};

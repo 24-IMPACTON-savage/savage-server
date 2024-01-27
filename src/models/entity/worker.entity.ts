@@ -21,6 +21,11 @@ export class Worker {
     name!: string
 
     @Column({
+        type: "varchar"
+    })
+    hashed!: string
+
+    @Column({
         type: "text"
     })
     introduce!: string
@@ -35,4 +40,9 @@ export class Worker {
         type: "date",
     })
     expr!: Date
+
+    @Column({
+        type: "varchar"
+    })
+    passport!: string
 }
