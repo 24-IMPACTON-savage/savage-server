@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn, JoinTable } from "typeorm";
+import { Worker } from "./worker.entity";
 
 @Entity()
 export class Senior {
@@ -19,4 +20,13 @@ export class Senior {
         length: 10
     })
     name: string
+
+    @Column({
+        type: "varchar",
+    })
+    address: string
+
+    @ManyToMany(() => Worker)
+    @JoinTable()
+    worker: Worker
 }

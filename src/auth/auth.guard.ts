@@ -1,5 +1,4 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException, UseFilters } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { Request } from 'express'
 import { JwtService } from '@nestjs/jwt'
 import { configDotenv } from 'dotenv';

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Senior } from "./senior.entity";
 
 @Entity()
@@ -22,7 +22,8 @@ export class Worker {
     name: string
 
     @Column({
-        type: "date"
+        type: "date",
+        default: Date.now()
     })
     expr: Date
 
