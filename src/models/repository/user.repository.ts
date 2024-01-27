@@ -2,6 +2,7 @@ import { Senior } from "../entity/senior.entity";
 import { Worker } from "../entity/worker.entity";
 import { AppDataSource } from "../../datasource";
 import { SaveSeniorDto, SaveWorkerDto } from "../../dto/entity.dto";
+import { NotFoundException } from "@nestjs/common";
 
 const seniorRepository = AppDataSource.getRepository(Senior);
 const workerRepository = AppDataSource.getRepository(Worker);
@@ -50,3 +51,9 @@ export const findByContact = async (contact: string) => {
     }
     return senior;
 };
+
+export const findByContactFromWorker = async (contact: string) => {
+    const worker = await workerRepository.findOneBy({ contact });
+    if(!worker) throw new NotFoundException()
+    return worker
+}
