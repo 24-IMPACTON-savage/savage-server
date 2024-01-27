@@ -2,19 +2,20 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Senior {
-    @PrimaryGeneratedColumn()
-    seniorId: number = 0
+    @PrimaryGeneratedColumn({
+        type: "int"
+    })
+    seniorId!: number
 
     @Column({
         unique: true,
         type: 'varchar',
-        length: 12
+        length: 25
     })
     contact!: string
 
     @Column({
-        type: "varchar",
-        length: 10
+        type: "varchar"
     })
     name!: string
 

@@ -3,19 +3,20 @@ import { Senior } from "./senior.entity";
 
 @Entity()
 export class Worker {
-    @PrimaryGeneratedColumn()
-    workerId: number = 0
+    @PrimaryGeneratedColumn({
+        "type" : "int"
+    })
+    workerId!: number
 
     @Column({
         unique: true,
         type: "varchar",
-        length: 12
+        length: 25
     })
     contact!: string
 
     @Column({
-        type: "varchar",
-        length: 10
+        type: "varchar"
     })
     name!: string
 
@@ -34,11 +35,4 @@ export class Worker {
         type: "date",
     })
     expr!: Date
-
-    @Column({name: 'seniorId' })
-    seniorId!: number
-
-    @ManyToMany(() => Senior)
-    @JoinTable()
-    senior?: Promise<Senior>
 }
