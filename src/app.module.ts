@@ -17,9 +17,9 @@ configDotenv()
 		host: process.env.DB_HOST,
 		database: process.env.DB_NAME,
 		synchronize: false, // false로 설정 안 하면 실행할 때마다 DB 날라감
-				logging: false, // 로그찍기
-				migrations: [__dirname + '/**/migrations/*.js'],
-				migrationsTableName: 'migrations'
+		logging: false, // 로그찍기
+		migrations: [__dirname + '/**/migrations/*.js'],
+		migrationsTableName: 'migrations'
 		}),
 		UserModule
 	],
