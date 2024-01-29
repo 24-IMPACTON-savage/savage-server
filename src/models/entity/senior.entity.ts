@@ -3,20 +3,29 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class Senior {
     @PrimaryGeneratedColumn({
-        type: "bigint"
+        type: "int"
     })
-    seniorId: number
+    seniorId!: number
 
     @Column({
         unique: true,
         type: 'varchar',
-        length: 12
+        length: 25
     })
-    contact: string
+    contact!: string
+
+    @Column({
+        type: "varchar"
+    })
+    name!: string
+
+    @Column({
+        type: "varchar"
+    })
+    hashed!: string
 
     @Column({
         type: "varchar",
-        length: 10
     })
-    name: string
+    address!: string
 }
